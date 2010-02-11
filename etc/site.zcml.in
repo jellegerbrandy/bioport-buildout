@@ -24,7 +24,5 @@
       <role id="zope.Manager" title="Site Manager" />
       <role id="zope.Member" title="Site Member" />
       <grantAll role="zope.Manager" />
-      <grant role="zope.Manager"
-             principal="zope.manager" />
    </configure>
 </configure>
