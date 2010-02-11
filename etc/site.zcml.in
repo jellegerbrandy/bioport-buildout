@@ -13,12 +13,6 @@
                         title="Authenticated Users" />
       <everybodyGroup id="zope.Everybody"
                       title="All Users" />
-      <principal id="zope.manager"
-                 title="Manager"
-                 login="admin"
-                 password_manager="SHA1"
-                 password="526954a3d033e22ae348aeb5660fc2140aec35850c4da997"
-                 />
 
       <!-- Replace the following directive if you do not want
            public access -->
