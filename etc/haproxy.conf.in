@@ -41,7 +41,8 @@ backend zope
   # If no session found, use the roundrobin load-balancing algorithm to pick a backend.
   balance roundrobin
   # Use / (the default) for periodic backend health checks
-  option httpchk GET /@@/pl.gif
+  option httpchk
+  #option httpchk GET /@@/pl.gif
 
   # Server options:
   # "cookie" sets the value of the serverid cookie to be used for the server
