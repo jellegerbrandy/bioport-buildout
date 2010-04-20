@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<import-steps>
+ <import-step id="bioportcontent.urlredirects" version="20100331-01"
+              handler="inghist.bioportcontent.utils.set_http_redirects"
+              title="Bioport content site url redirection setup">
+        Setup url redirections not to break external links to the site
+ </import-step>
+</import-steps>

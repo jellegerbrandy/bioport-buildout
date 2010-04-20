@@ -1,0 +1,7 @@
+<h3 tal:content="context/@@bioportcontent_utils/born_today_portlet_title"/>
+<div class="sidebar gallery">
+    <div id="pBirthdays">&nbsp;</div>
+</div>
+<span class="sep"></span>
+<a class="more" href="/birthdays">toon meer</a>
+<hr class="textOnly" />

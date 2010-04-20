@@ -1,0 +1,34 @@
+<configure 
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="inghist.bioportcontent">
+  <!-- Ensure Plone's portlets ZCML has already been processed; without
+       this, we may get a permission lookup error
+  -->
+  <include package="plone.app.portlets" />
+  <!-- -*- extra stuff goes here -*- -->
+
+  <plone:portlet
+      name="inghist.bioportcontent.portlets.BornTodayPortlet"
+      interface=".borntodayportlet.IBornTodayPortlet"
+      assignment=".borntodayportlet.Assignment"
+      view_permission="zope2.View"
+      edit_permission="cmf.ManagePortal"
+      renderer=".borntodayportlet.Renderer"
+      addview=".borntodayportlet.AddForm"
+      editview=".borntodayportlet.EditForm"
+      />
+
+
+  <plone:portlet
+      name="inghist.bioportcontent.portlets.BlogPortlet"
+      interface=".blogportlet.IBlogPortlet"
+      assignment=".blogportlet.Assignment"
+      view_permission="zope2.View"
+      edit_permission="cmf.ManagePortal"
+      renderer=".blogportlet.Renderer"
+      addview=".blogportlet.AddForm"
+      editview=".blogportlet.EditForm"
+      />
+
+</configure>

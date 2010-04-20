@@ -27,12 +27,31 @@ defaults
   stats refresh 5s
   stats realm Haproxy statistics
 
-frontend zopecluster
+frontend BiografischPortaal
   bind ${haproxy-conf:bind}
-  default_backend zope
+  # We expect to be queried with urls like
+  # http://bionic.inghist.nl:8094/bioport/++vh++http:www.biografischportaal.nl:80/++/blog
+  # so our path starts with /++/
+  # but since these are regexps we escape the plus
+  acl is_grok path_reg .*/\+\+/?(en/)?(@@index)?$
+  acl is_grok path_reg .*/\+\+/admin.*
+  acl is_grok path_reg .*/\+\+/(en/)?zoek.*
+  acl is_grok path_reg .*/\+\+/(en/)?personen.*
+  acl is_grok path_reg .*/\+\+/(en/)?persoon.*
+  acl is_grok path_reg .*/\+\+/(en/)?contact.*
+  acl is_grok path_reg .*/\+\+/(en/)?captcha_image.*
+  acl is_grok path_reg .*/\+\+/(en/)?@@/.*
+  acl is_grok path_reg .*/\+\+/(en/)?images.xml.*
+  acl is_grok path_reg .*/\+\+/(en/)?birthdays.*
+  acl is_grok path_reg .*/\+\+/(en/)?birthdays_box
+  acl has_language path_reg .*VirtualHostRoot/en/.*
+  acl has_language path_reg .*VirtualHostRoot/nl/.*
+  use_backend grok if is_grok
+  use_backend plone_nl if !is_grok !has_language
+  default_backend plone_en
 
-# Load balancing over the zope instances
-backend zope
+# Load balancing over the grok instances
+backend grok
   # Use Zope's __ac cookie as a basis for session stickiness if present.
   appsession __ac len 32 timeout 1d
   # Otherwise add a cookie called "serverid" for maintaining session stickiness.
@@ -41,7 +60,7 @@ backend zope
   # If no session found, use the roundrobin load-balancing algorithm to pick a backend.
   balance roundrobin
   # Use / (the default) for periodic backend health checks
-  option httpchk
+  #option httpchk
   #option httpchk GET /@@/pl.gif
 
   # Server options:
@@ -49,8 +68,32 @@ backend zope
   # "maxconn" is how many connections can be sent to the server at once
   # "check" enables health checks
   # "rise 1" means consider Zope up after 1 successful health check
-  server  plone0101 127.0.0.1:${zeoclient1:http-address} cookie p0101 check maxconn 3 rise 1
-  server  plone0102 127.0.0.1:${zeoclient2:http-address} cookie p0102 check maxconn 3 rise 1
-  server  plone0103 127.0.0.1:${zeoclient3:http-address} cookie p0103 check maxconn 3 rise 1
-  server  plone0104 127.0.0.1:${zeoclient4:http-address} cookie p0104 check maxconn 3 rise 1
+  server  grok0101 127.0.0.1:${zeoclient1:http-address} cookie p0101 check maxconn 3 rise 1
+  server  grok0102 127.0.0.1:${zeoclient2:http-address} cookie p0102 check maxconn 3 rise 1
+  server  grok0103 127.0.0.1:${zeoclient3:http-address} cookie p0103 check maxconn 3 rise 1
+  server  grok0104 127.0.0.1:${zeoclient4:http-address} cookie p0104 check maxconn 3 rise 1
 
+backend plone_en
+  server plone0101 127.0.0.1:8093 weight 1 check inter 1000 rise 5 fall 1
+  # We expect Apache to generate urls good for grok
+  # i.e. http://bionic.inghist.nl:8094/bioport/++vh++http:www.biografischportaal.nl:80/++/blog
+  # and we convert them here to be liked by Plone
+  # uncomment in production!  reqrep ^([^\ ]*)\ /bioport/(.*)\+\+vh\+\+http:(.*)/\+\+/(.*)     \1\ /\2VirtualHostBase/http/\3/bioport/VirtualHostRoot/\4
+  # Please note that this match happens on the whole GET line, so the
+  # first match group represents the http verb (usually GET or POST)
+  # for reference here is a sample substitution that strips a leading /static/ from the url
+  #reqrep ^([^\ ]*)\ /static/(.*)     \1\ /\2
+  # The following line allows this configuration to work from a url such as
+  # http://dev.inghist.nl/bioport/
+  reqrep ^([^\ ]*)\ /bioport/(.*)\+\+vh\+\+http:(.*)/\+\+(/?.*)     \1\ /\2VirtualHostBase/http/\3/bioport/VirtualHostRoot/_vh_bioport\4 #comment this in production!
+
+backend plone_nl
+  # same rules as above, with a little variation to inject the language
+  # Here we add a leading /nl since we didn't find a leading /en
+  # (otherwise we would end up in the plone_en backend)
+  # since our policy is "Serve Dutch content if not otherwise requested"
+  server plonenl0101 127.0.0.1:8093 weight 1 check inter 1000 rise 5 fall 1
+  # uncomment in production! reqrep ^([^\ ]*)\ /bioport/(.*)\+\+vh\+\+http:(.*)/\+\+/(.*)     \1\ /\2VirtualHostBase/http/\3/bioport/nl/VirtualHostRoot/\4
+  # The following line allows this configuration to work from a url such as
+  # http://dev.inghist.nl/bioport/
+  reqrep ^([^\ ]*)\ /bioport/(.*)\+\+vh\+\+http:(.*)/\+\+(/?.*)     \1\ /\2VirtualHostBase/http/\3/bioport/nl/VirtualHostRoot/_vh_bioport\4 # comment in production!

@@ -1,0 +1,19 @@
+<div class="navigation_box">
+    <ul tal:define="current_page_url view/get_current_url">
+        <li tal:repeat="item python: context.queryCatalog()">
+        <a href="#20100318" 
+           tal:attributes="href string:${current_page_url}#${item/id}">
+                <span tal:replace="python: view.translated_date(item.EffectiveDate)">
+                    18 maart
+                </span>
+                <br>
+                <span tal:replace="item/Creator">
+                    Mandy Prins
+                </span>:
+                <span tal:replace="item/Title">
+                    'Sprekende namen'
+                </span>
+            </a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules xmlns="http://openplans.org/deliverance">
+    <drop theme="//*[@id='colcenter']/*"/>
+    <append theme="//*[@id='colcenter']" content="//*[@id='portal-column-content']/*"/>
+    <drop theme="//*[@id='colright']/*"/>
+    <append theme="//*[@id='colright']" content="//*[@id='portal-column-two']/*"/>
+
+
+    <!-- The following rules make the Plone portlet fit the Biografisch Portaal -->
+    <drop content="//li[contains(@class,'navTreeItem')]//img" />
+    <drop content="//*[contains(@class, 'portletNavigationTree')]/*[contains(@class, 'portletHeader')]" />
+
+<!--
+    <append theme="/html/head" content="/html/head/script"/>
+    <append theme="/html/head" content="/html/head/style"/>
+    <append theme="/html/head" content="/html/head/link"/>
+-->
+
+    <!-- Insert language selector in top bar -->
+    <drop content="//*[@id='portal-languageselector']//*[@class='currentLanguage']"/>
+    <drop theme="//ul[@id='portal-languageselector']" />
+    <append content="//ul[@id='portal-languageselector']" theme="//div[@id='layMenu']" />
+
+    <!-- Use the content-provided title tag -->
+    <replace theme="/html/head/title" content="/html/head/title"/>
+</rules>
+

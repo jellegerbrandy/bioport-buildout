@@ -1,0 +1,38 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="inghist.bioportcontent">
+
+  <five:registerPackage package="." initialize=".initialize" />
+
+  <genericsetup:registerProfile
+      name="default"
+      title="inghist.bioportcontent"
+      directory="profiles/default"
+      description="Installs the inghist.bioportcontent package"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+  <!-- -*- extra stuff goes here -*- -->
+
+  <include package=".portlets" />
+  
+  <browser:page
+    for=".interfaces.IBioportBlog"
+    template="blog_template.pt"
+    permission="zope.Public"
+    name="folder_listing"
+    class=".blog_class.BlogView"
+  />
+
+  <browser:page
+    for="*"
+    permission="zope.Public"
+    name="bioportcontent_utils"
+    class=".utils.BioportcontentUtils"
+    allowed_interface=".utils.IBioportcontentUtils"
+  />
+  
+</configure>
