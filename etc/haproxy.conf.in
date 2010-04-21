@@ -94,7 +94,7 @@ backend plone_nl
   # (otherwise we would end up in the plone_en backend)
   # since our policy is "Serve Dutch content if not otherwise requested"
   server plonenl0101 127.0.0.1:8093 weight 1 check inter 1000 rise 5 fall 1
-  # uncomment in production! reqrep ^([^\ ]*)\ /bioport/(.*)\+\+vh\+\+http:(.*)/\+\+/(.*)     \1\ /\2VirtualHostBase/http/\3/bioport/nl/VirtualHostRoot/\4
+  reqrep ^([^\ ]*)\ /bioport/(.*)\+\+vh\+\+http:(.*)/\+\+/(.*)     \1\ /\2VirtualHostBase/http/\3/bioport/nl/VirtualHostRoot/\4
   # The following line allows this configuration to work from a url such as
   # http://dev.inghist.nl/bioport/
-  reqrep ^([^\ ]*)\ /bioport/(.*)\+\+vh\+\+http:(.*)/\+\+(/?.*)     \1\ /\2VirtualHostBase/http/\3/bioport/nl/VirtualHostRoot/_vh_bioport\4 # comment in production!
+  #reqrep ^([^\ ]*)\ /bioport/(.*)\+\+vh\+\+http:(.*)/\+\+(/?.*)     \1\ /\2VirtualHostBase/http/\3/bioport/nl/VirtualHostRoot/_vh_bioport\4 # comment in production!
