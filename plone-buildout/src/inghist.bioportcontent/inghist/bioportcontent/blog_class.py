@@ -22,6 +22,9 @@ class BlogView(BrowserView):
         ts = getGlobalTranslationService()
         month_name = translate_month(month, current_language)
         weekday_index = datetime.date(year, month, day).weekday()
+        # It looks like Plone's i18nl10n expects 0 to be a monday
+        # while datetime's expects sunday. So we adjust it.
+        weekday_index = (weekday_index + 1) % 7
         weekday_id = i18nl10n.weekdayname_msgid(weekday_index)
         weekday_name = ts.translate(domain='plonelocales', msgid=weekday_id,
                                     target_language=current_language)
