@@ -46,10 +46,6 @@ use = egg:Paste#translogger
 setup_console_handler = False
 logger_name = wsgi
 
-[app:main]
-use = egg:bioport
-filter-with = translogger
-
 [server:main]
 use = egg:Paste#http
 host =0.0.0.0 
@@ -58,3 +54,16 @@ port = 8094
 [DEFAULT]
 # set the name of the zope.conf file
 zope_conf = %(here)s/zope.conf
+
+[filter:profile]
+use = egg:repoze.profile#profile
+log_filename = myapp.profile
+cachegrind_filename = cachegrind.out.myapp
+discard_first_request = true
+path = /__profile__
+flush_at_shutdown = true
+
+[app:main]
+use = egg:bioport
+filter-with = profile
+
