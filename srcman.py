@@ -5,6 +5,7 @@
 import optparse
 import sys
 import os
+import logging
 
 import biodes
 from bioport_repository.repository import Repository
@@ -17,6 +18,23 @@ DEFAULT_DB = "mysql://root@localhost/bioport"
 #TOTAL_BIOS = _repo.count_biographies()
 #TOTAL_PERSONS = _repo.count_persons()
 #IMAGES_DIR = _repo.images_cache_local  
+
+
+def setup_logger(level=logging.WARNING):
+    """Redirects the standard logger used in bioport and 
+    bioport_repository packages to stderr.
+    
+    By default it shows only messages with a priority level >= WARNING.
+    Call it with logging.DEBUG as an argument for complete verbosity.
+    """
+    logger = logging.getLogger()
+    logger.setLevel(level)
+
+    ch = logging.StreamHandler()
+    ch.setLevel(level)
+    logger.addHandler(ch)
+
+setup_logger()
 
 
 def get_ids():
@@ -118,9 +136,14 @@ def main():
     parser.add_option('-d', '--directory', default=DEFAULT_IMAGES_DIR, metavar="DIRECTORY",
                       help='the directory where the illustrations will be stored ' \
                            '(defaults to %s)' % DEFAULT_IMAGES_DIR)
+    parser.add_option('-v', '--verbose', default=False, action='store_true',
+                      help="verbose mode")
+
     options, args = parser.parse_args()
     _repo = Repository(db_connection=options.sqldb, 
                        images_cache_local=options.directory) 
+    if options.verbose:
+        setup_logger(logging.DEBUG)
     if options.list:
         list_sources()
         sys.exit(0)
@@ -129,7 +152,7 @@ def main():
         sys.exit(0)
     if options.biographies:
         download_biographies(options.biographies)
-
+        sys.exit(0)
         
 if __name__ == '__main__':
     main()
