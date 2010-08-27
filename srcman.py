@@ -140,6 +140,7 @@ def refresh_similarity_table(id):
     
 def main():
     global _repo
+
     class CustomizedOptionFormatter(optparse.IndentedHelpFormatter):
         """Formats options shown in help in a prettier way."""
 
@@ -148,11 +149,11 @@ def main():
             opts = self.option_strings[option]
             result.append('  %s\n' % opts)
             if option.help:
-                help_text = '     %s\n\n' %self.expand_default(option)
+                help_text = '     %s\n\n' % self.expand_default(option)
                 result.append(help_text)
             return ''.join(result)
     
-    parser = optparse.OptionParser()
+    parser = optparse.OptionParser(formatter=CustomizedOptionFormatter())
     parser.add_option('-l', '--list', action='store_true',
                       help="list all available sources")
     parser.add_option('-a', '--add-source', metavar="ID,URL,DESCRIPTION",
