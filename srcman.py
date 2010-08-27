@@ -115,6 +115,19 @@ def download_biographies(id):
 def delete_source(id):
     """Delete source with given id"""
     _repo.delete_source(Source(id, '', ''))
+    print "deleted source with id " + id
+
+def delete_biographies(id):
+    """Delete source with given id"""
+    _repo.delete_biographies(Source(id, '', ''))
+    print "deleted biographies of source with id " + id
+
+def add_source(id, url, descr):
+    """Add source with given id, url and description"""
+    src = Source(id, url, descr)
+    _repo.add_source(src)
+    print "added source with id " + id
+
 
     
 def main():
@@ -134,6 +147,9 @@ def main():
     parser = optparse.OptionParser()
     parser.add_option('-l', '--list', action='store_true',
                       help="list all available sources")
+    parser.add_option('-a', '--add-source', metavar="ID,URL,DESCRIPTION",
+                      help="add new source with given id, url and descrption "
+                           "(comma separated values)")
     parser.add_option('-i', '--illustrations', metavar="ID",
                       help="download illustrations of source ID")
     parser.add_option('-b', '--biographies', metavar="ID",
@@ -141,7 +157,9 @@ def main():
     parser.add_option('-o', '--overwrite', default=False, action='store_true',
                       help="if specified re-download and overwrite existing "\
                             "files when downloading illustrations" )
-    parser.add_option('-D', '--delete-source', metavar="ID",
+    parser.add_option('--ds', '--delete-source', metavar="ID",
+                      help="delete source given it ID")
+    parser.add_option('--db', '--delete-biographies', metavar="ID",
                       help="delete source given it ID")
     parser.add_option('-s', '--sqldb', default=DEFAULT_DB, metavar="DBURL",
                       help='sql database connection url (defaults to %s)' % DEFAULT_DB)
@@ -165,9 +183,20 @@ def main():
     if options.biographies:
         download_biographies(options.biographies)
         sys.exit(0)
-    if options.delete_source:
-        delete_source(options.delete_source)
+    if options.ds:
+        delete_source(options.ds)
         sys.exit(0)
+    if options.db:
+        delete_biographies(options.db)
+        sys.exit(0)
+    if options.add_source:
+        if options.add_source.count(',') != 2:
+            parser.error('needs comma separated values such as "id,url,descr"')
+        id, url, descr = options.add_source.split(',')
+        add_source(id, url, descr)
+        sys.exit(0)
+
+
         
 if __name__ == '__main__':
     main()
