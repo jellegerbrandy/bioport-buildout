@@ -11,6 +11,7 @@ import biodes
 from bioport_repository.repository import Repository
 from bioport_repository.illustration import CantDownloadImage
 from bioport_repository.biography import Biography
+from bioport_repository.source import Source
 
 
 DEFAULT_IMAGES_DIR = "/var/bioport/images_test"
@@ -19,6 +20,8 @@ DEFAULT_DB = "mysql://root@localhost/bioport"
 #TOTAL_PERSONS = _repo.count_persons()
 #IMAGES_DIR = _repo.images_cache_local  
 
+
+# --- private API
 
 def setup_logger(level=logging.WARNING):
     """Redirects the standard logger used in bioport and 
@@ -40,7 +43,9 @@ setup_logger()
 def get_ids():
     """Return the IDs of all defined sources"""
     return [src.id for src in _repo.get_sources()]
-       
+
+
+# --- public API 
 
 def list_sources():
     print "\ntotal biographies: %s"  %_repo.count_biographies()
@@ -106,6 +111,11 @@ def download_biographies(id):
     print "total:%(total)s skipped:%(skipped)s" % locals()
     _repo.delete_orphaned_persons(source_id=src.id)
 
+
+def delete_source(id):
+    """Delete source with given id"""
+    _repo.delete_source(Source(id, '', ''))
+
     
 def main():
     global _repo
@@ -131,6 +141,8 @@ def main():
     parser.add_option('-o', '--overwrite', default=False, action='store_true',
                       help="if specified re-download and overwrite existing "\
                             "files when downloading illustrations" )
+    parser.add_option('-D', '--delete-source', metavar="ID",
+                      help="delete source given it ID")
     parser.add_option('-s', '--sqldb', default=DEFAULT_DB, metavar="DBURL",
                       help='sql database connection url (defaults to %s)' % DEFAULT_DB)
     parser.add_option('-d', '--directory', default=DEFAULT_IMAGES_DIR, metavar="DIRECTORY",
@@ -152,6 +164,9 @@ def main():
         sys.exit(0)
     if options.biographies:
         download_biographies(options.biographies)
+        sys.exit(0)
+    if options.delete_source:
+        delete_source(options.delete_source)
         sys.exit(0)
         
 if __name__ == '__main__':
