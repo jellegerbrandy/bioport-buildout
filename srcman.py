@@ -128,6 +128,14 @@ def add_source(id, url, descr):
     _repo.add_source(src)
     print "added source with id " + id
 
+def refresh_similarity_table(id):
+    """Refresh similarity table of source with given id."""
+    if not id in get_ids():
+        # XXX - this should be checked in db.fill_similarity_cache but 
+        # it isn't; I'd say it's an application bug
+        raise ValueError("no source with id %s was found" % id)
+    _repo.db.fill_similarity_cache(refresh=True, source_id=id)
+    print "similarity table of source with id %s refreshed" % id
 
     
 def main():
@@ -161,6 +169,8 @@ def main():
                       help="delete source given it ID")
     parser.add_option('--db', '--delete-biographies', metavar="ID",
                       help="delete source given it ID")
+    parser.add_option('-r', '--refresh-similarity-table', metavar="ID",
+                      help="refresh similarity table of source with given ID")
     parser.add_option('-s', '--sqldb', default=DEFAULT_DB, metavar="DBURL",
                       help='sql database connection url (defaults to %s)' % DEFAULT_DB)
     parser.add_option('-d', '--directory', default=DEFAULT_IMAGES_DIR, metavar="DIRECTORY",
@@ -195,9 +205,11 @@ def main():
         id, url, descr = options.add_source.split(',')
         add_source(id, url, descr)
         sys.exit(0)
+    if options.refresh_similarity_table:
+        refresh_similarity_table(options.refresh_similarity_table)
+        sys.exit(0)
 
 
-        
 if __name__ == '__main__':
     main()
 
