@@ -15,7 +15,7 @@ from bioport_repository.source import Source
 
 
 DEFAULT_IMAGES_DIR = "/var/bioport/images_test"
-DEFAULT_DB = "mysql://root@localhost/bioport"
+DEFAULT_DB = "mysql://jge:MilanO8@localhost/bioport"
 #TOTAL_BIOS = _repo.count_biographies()
 #TOTAL_PERSONS = _repo.count_persons()
 #IMAGES_DIR = _repo.images_cache_local  
@@ -189,7 +189,11 @@ def main():
         list_sources()
         sys.exit(0)
     if options.illustrations:
-        download_illustrations(options.illustrations, options.overwrite)
+        id = options.illustrations
+        if id != 'ALL':
+            download_illustrations(id, options.overwrite)
+        for id in get_ids():
+            download_illustrations(id, options.overwrite)
         sys.exit(0)
     if options.biographies:
         download_biographies(options.biographies)
