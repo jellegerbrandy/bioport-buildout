@@ -91,7 +91,6 @@ def download_biographies(id):
     total = len(ls)
     skipped = 0
     for index, biourl in enumerate(ls):
-        print "%s/%s " % (index + 1, total)
         if not biourl.startswith("http:"):
             # we're dealing with a fs path
             biourl = os.path.normpath(biourl)
@@ -101,12 +100,16 @@ def download_biographies(id):
         bio = Biography(source_id=src.id, repository=src.repository)
         try:
             bio.from_url(biourl)
+            print "%s/%s %s" % (index + 1, total, bio.get_names())
         except Exception, err:
             skipped += 1
             print err
             continue
 
-        _repo.add_biography(bio)
+        try:
+            _repo.add_biography(bio)
+        except:
+            from pdb import set_trace;set_trace() ############################## Breakpoint ##############################
 
     print "total:%(total)s skipped:%(skipped)s" % locals()
     _repo.delete_orphaned_persons(source_id=src.id)
