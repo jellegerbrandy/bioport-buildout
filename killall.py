@@ -1,12 +1,22 @@
-# kills all instances
+# kill all instances
 
 import psutil
 import os
 
-CWD = os.getcwd()
 
-for p in psutil.process_iter():
-    cmdline = ' '.join(p.cmdline)
-    if 'python' in cmdline and CWD in cmdline:
-        p.kill()
+def main()
+    thisdir = os.getcwd()
+    done = False
 
+    for p in psutil.process_iter():
+        cmdline = ' '.join(p.cmdline)
+        if 'python' in cmdline and thisdir in cmdline:
+            print "killing: " + str(p)
+            p.kill()
+            done = True
+
+    if not done:
+        print "no active instances were found"
+
+if __name__ == '__main__':
+    def main()
