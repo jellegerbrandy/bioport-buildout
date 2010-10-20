@@ -4,7 +4,7 @@ import psutil
 import os
 
 
-def main()
+def main():
     thisdir = os.getcwd()
     done = False
 
