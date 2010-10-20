@@ -19,4 +19,4 @@ def main():
         print "no active instances were found"
 
 if __name__ == '__main__':
-    def main()
+    main()
