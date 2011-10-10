@@ -36,6 +36,7 @@ frontend BiografischPortaal
   acl is_grok path_reg .*/\+\+/?(en/)?(@@index)?$
   acl is_grok path_reg .*/\+\+/admin.*
   acl is_grok path_reg .*/\+\+/sitemaps
+  acl is_grok path_reg .*/\+\+/resolver
   acl is_grok path_reg .*/\+\+/en$
   acl is_grok path_reg .*/\+\+/(en/)?zoek.*
   acl is_grok path_reg .*/\+\+/(en/)?personen.*
