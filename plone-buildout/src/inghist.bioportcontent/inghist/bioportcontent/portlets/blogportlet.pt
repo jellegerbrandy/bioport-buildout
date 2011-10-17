@@ -13,6 +13,7 @@
                 <span tal:replace="item/Title">
                     'Sprekende namen'
                 </span>
+                <span tal:replace="python:dir(item);"></span>
             </a>
         </li>
     </ul>
