@@ -28,5 +28,5 @@ class BlogView(BrowserView):
         weekday_id = i18nl10n.weekdayname_msgid(weekday_index)
         weekday_name = ts.translate(domain='plonelocales', msgid=weekday_id,
                                     target_language=current_language)
-        result = "%s %i %s" % (weekday_name, int(day), month_name)
+        result = "%s %i %s %s" % (weekday_name, int(day), month_name, year)
         return result
