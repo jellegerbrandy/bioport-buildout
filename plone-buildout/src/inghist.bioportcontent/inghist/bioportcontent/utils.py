@@ -2,7 +2,8 @@ import datetime
 from date_utils import translate_month
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
-from Products.PageTemplates.GlobalTranslationService import getGlobalTranslationService
+#from Products.PageTemplates.GlobalTranslationService import getGlobalTranslationService
+from zope.i18n import translate
 from zope.interface import Interface
 
 class BioportcontentUtils(BrowserView):
@@ -12,7 +13,6 @@ class BioportcontentUtils(BrowserView):
         tool = getToolByName(self.context, 'portal_languages')
         current_language = tool.getLanguageBindings()[0]
         month_name = translate_month(month_index, current_language)
-        ts = getGlobalTranslationService()
         if current_language == 'nl':
             title = "Op %(day)i %(month_name)s geboren"
         else:
