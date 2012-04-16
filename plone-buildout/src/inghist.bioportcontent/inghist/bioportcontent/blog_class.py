@@ -1,7 +1,8 @@
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone import i18nl10n
-from Products.PageTemplates.GlobalTranslationService import getGlobalTranslationService
+#from Products.PageTemplates.GlobalTranslationService import getGlobalTranslationService
+from zope.i18n import translate
 import time
 import datetime
 from date_utils import translate_month
@@ -19,14 +20,14 @@ class BlogView(BrowserView):
         except ValueError:
             logger.error("Error formatting date %s" % date)
             return ''
-        ts = getGlobalTranslationService()
+#        ts = getGlobalTranslationService()
         month_name = translate_month(month, current_language)
         weekday_index = datetime.date(year, month, day).weekday()
         # It looks like Plone's i18nl10n expects 0 to be a monday
         # while datetime's expects sunday. So we adjust it.
         weekday_index = (weekday_index + 1) % 7
         weekday_id = i18nl10n.weekdayname_msgid(weekday_index)
-        weekday_name = ts.translate(domain='plonelocales', msgid=weekday_id,
+        weekday_name = translate(domain='plonelocales', msgid=weekday_id,
                                     target_language=current_language)
         result = "%s %i %s %s" % (weekday_name, int(day), month_name, year)
         return result
