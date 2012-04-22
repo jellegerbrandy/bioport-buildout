@@ -5,7 +5,6 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:plone="http://namespaces.plone.org/plone"
-    
     i18n_domain="inghist.bioportcontent">
 
   <five:registerPackage package="." initialize=".initialize" />
@@ -36,5 +35,4 @@
     class=".utils.BioportcontentUtils"
     allowed_interface=".utils.IBioportcontentUtils"
   />
- <plone:static directory="theme" type="theme" name="bioport_theme" />  
 </configure>
