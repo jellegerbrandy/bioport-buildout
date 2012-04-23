@@ -47,6 +47,7 @@ http://www.biografischportaal.nl/
 	manage
 	portal_javascripts
 	referencebrowser_popup
+	contact
 " />
     <drop theme="//*[@id='colcenter']/*"/>
     <append theme="//*[@id='colcenter']" content="//*[@id='portal-column-content']/*"/>
