@@ -76,14 +76,18 @@ class Renderer(base.Renderer):
             return self.request['ACTUAL_URL']
         else:
             return ''
+        
     def translated_date(self, datestring):
         tool = getToolByName(self.context, 'portal_languages')
         current_language = tool.getLanguageBindings()[0]
         try:
             year, month, day, m,m,m,m,m,m = time.strptime(datestring,"%Y-%m-%d %H:%M:%S")
         except ValueError:
-            logger.error("invalid date: " + datestring)
-            return ''
+            try:
+	            year, month, day, m,m,m,m,m,m = time.strptime(datestring,"%Y-%m-%dT%H:%M:%S+02:00")
+            except ValueError:
+	            logger.error("invalid date: " + datestring)
+	            return ''
         month_name = translate_month(month, current_language)
         return '%i %s %i' % (int(day), month_name, year)
 

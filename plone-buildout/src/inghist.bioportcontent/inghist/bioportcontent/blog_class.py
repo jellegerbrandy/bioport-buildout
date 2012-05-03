@@ -15,11 +15,16 @@ class BlogView(BrowserView):
         current_language = tool.getLanguageBindings()[0]
         # The catalog stores a string to represent the date
         # we have to parse it
+        datestring = date
         try:
-            year, month, day, m,m,m,m,m,m = time.strptime(date,"%Y-%m-%d %H:%M:%S")
+            year, month, day, m,m,m,m,m,m = time.strptime(datestring,"%Y-%m-%d %H:%M:%S")
         except ValueError:
-            logger.error("Error formatting date %s" % date)
-            return ''
+            try:
+                year, month, day, m,m,m,m,m,m = time.strptime(datestring,"%Y-%m-%dT%H:%M:%S+02:00")
+            except ValueError:
+                logger.error("Error formatting date %s" % date)
+                return ''
+
 #        ts = getGlobalTranslationService()
         month_name = translate_month(month, current_language)
         weekday_index = datetime.date(year, month, day).weekday()
