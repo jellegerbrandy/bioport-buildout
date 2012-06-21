@@ -55,15 +55,15 @@ port = 8094
 # set the name of the zope.conf file
 zope_conf = %(here)s/zope.conf
 
-[filter:profile]
-use = egg:repoze.profile#profile
-log_filename = myapp.profile
-cachegrind_filename = cachegrind.out.myapp
-discard_first_request = true
-path = /__profile__
-flush_at_shutdown = true
+#[filter:profile]
+#use = egg:repoze.profile#profile
+#log_filename = myapp.profile
+#cachegrind_filename = cachegrind.out.myapp
+#discard_first_request = true
+#path = /__profile__
+#flush_at_shutdown = true
 
 [app:main]
 use = egg:bioport
-filter-with = profile
+#filter-with = profile
 
