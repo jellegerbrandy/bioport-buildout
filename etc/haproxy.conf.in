@@ -71,10 +71,10 @@ backend grok
   # "maxconn" is how many connections can be sent to the server at once
   # "check" enables health checks
   # "rise 1" means consider Zope up after 1 successful health check
-  server  grok0101 127.0.0.1:${zeoclient1:http-address} cookie p0101 check maxconn 3 rise 1
-  server  grok0102 127.0.0.1:${zeoclient2:http-address} cookie p0102 check maxconn 3 rise 1
-  server  grok0103 127.0.0.1:${zeoclient3:http-address} cookie p0103 check maxconn 3 rise 1
-  server  grok0104 127.0.0.1:${zeoclient4:http-address} cookie p0104 check maxconn 3 rise 1
+  server  grok0101 127.0.0.1:${zeoclient1:http-address} cookie p0101 check maxconn 2 rise 1
+  server  grok0102 127.0.0.1:${zeoclient2:http-address} cookie p0102 check maxconn 2 rise 1
+  server  grok0103 127.0.0.1:${zeoclient3:http-address} cookie p0103 check maxconn 2 rise 1
+  #server  grok0104 127.0.0.1:${zeoclient4:http-address} cookie p0104 check maxconn 3 rise 1
 
 backend plone_en
   server plone0101 127.0.0.1:8093 weight 1 check inter 1000 rise 5 fall 1
