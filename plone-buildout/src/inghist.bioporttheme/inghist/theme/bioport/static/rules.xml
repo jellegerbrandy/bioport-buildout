@@ -29,11 +29,11 @@ http://www.biografischportaal.nl/
  
 <theme href="http://www.biografischportaal.nl/contact" />
 <theme href="http://www.biografischportaal.nl/en/contact"  if-path="en" />
+
  <!-- 
-<theme href="http://127.0.0.1:8094/bioport/++vh++http:www.biografischportaal.nl:80/++/contact" />
-<theme href="http://127.0.0.1:8094/bioport/++vh++http:www.biografischportaal.nl:80/++/en/contact" if-path="en" />
+<theme href="http://127.0.0.1:8094/bioport/++vh++http:test.bioport.huygens.knaw.nl:80/++/contact" />
+<theme href="http://127.0.0.1:8094/bioport/++vh++http:test.bioport.huygens.knaw.nl:80/++/en/contact" if-path="en" />
   -->
-     
 
 <notheme if-path="@@manage-viewlets" />
 <notheme if-path="
