@@ -1,0 +1,16 @@
+plone-buildout/
+.installed.cfg
+bin/
+bioport/
+deploy/
+develop-eggs/
+eggs/
+etc/.svn/
+fabfile.pyc
+parts/
+src/
+tunnel.pyc
+var/
+.mr.developer.cfg
+*.swp
+.svn/
