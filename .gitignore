@@ -1,4 +1,5 @@
-plone-buildout/
+plone-buildout/products/
+
 .installed.cfg
 bin/
 bioport/

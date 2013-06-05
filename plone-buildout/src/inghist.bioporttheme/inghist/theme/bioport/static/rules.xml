@@ -48,6 +48,7 @@ http://www.biografischportaal.nl/
 	referencebrowser_popup
 	contact
 " />
+<notheme if-content="//*[@id='edit-bar']" />
     <drop theme="//*[@id='colcenter']/*"/>
     <append theme="//*[@id='colcenter']" content="//*[@id='portal-column-content']/*"/>
     <drop theme="//*[@id='colright']/*"/>
