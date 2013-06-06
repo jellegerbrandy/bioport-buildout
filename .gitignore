@@ -15,3 +15,7 @@ var/
 .mr.developer.cfg
 *.swp
 .svn/
+.noseids
+.project
+.pydevproject
+.settings/
