@@ -16,5 +16,7 @@ cd src/names/ && git pull && cd ../..
 cd src/gerbrandyutils/ && git pull && cd ../..
 mysqladmin drop bioport_test -f
 mysqladmin create bioport_test
-bin/coveragetest bin/xmltest --xml --no-color
+
+bin/test
+# bin/coveragetest bin/xmltest --xml --no-color
 # buildout/bin/coveragexml
