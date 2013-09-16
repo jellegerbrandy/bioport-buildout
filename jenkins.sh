@@ -12,6 +12,8 @@ bin/buildout  -vv -c jenkins.cfg
 cd src/bioport_repository/ && git pull && cd ../..
 cd src/bioport/ && git pull && cd ../..
 cd src/biodes/ && git pull && cd ../..
+cd src/names/ && git pull && cd ../..
+cd src/gerbrandyutils/ && git pull && cd ../..
 mysqladmin drop bioport_test -f
 mysqladmin create bioport_test
 bin/coveragetest bin/xmltest --xml --no-color
