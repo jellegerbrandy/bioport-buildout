@@ -6,7 +6,7 @@
 virtualenv env
 env/bin/pip install -U setuptools
 rm src/bioport_repository/bioport_repository/tests/data/bioport_mysqldump.sql -f
-env/bin/python bootstrap.py
+env/bin/python bootstrap.py -c jenkins.cfg
 
 bin/buildout  -vv -c jenkins.cfg
 cd src/bioport_repository/ && git pull && cd ../..
