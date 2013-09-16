@@ -17,6 +17,5 @@ cd src/gerbrandyutils/ && git pull && cd ../..
 mysqladmin drop bioport_test -f
 mysqladmin create bioport_test
 
-bin/test
-# bin/coveragetest bin/xmltest --xml --no-color
-# buildout/bin/coveragexml
+bin/coveragetest bin/xmltest --xml --no-color
+bin/coveragexml
