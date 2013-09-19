@@ -21,7 +21,7 @@ http://127.0.0.1:8094/bioport/++vh++http:www.biografischportaal.nl:80/++/contact
 ^.*/portal_javascripts(/.*)?$
 ^.*/referencebrowser_popup$
 
-RELATIVE --> ABSOLUTE:
+RELATIVE -> ABSOLUTE:
 
 http://www.biografischportaal.nl/
      -->
