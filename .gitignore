@@ -19,3 +19,7 @@ var/
 .project
 .pydevproject
 .settings/
+.coverage
+env/
+violations.txt
+tmp/
