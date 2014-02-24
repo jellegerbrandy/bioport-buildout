@@ -1,0 +1,5 @@
+choose a *.cfg file or create your own.
+
+
+> python bootstrap.py -v 1.7.0 -c hi19.cfg
+> bin/buildout -vv -c hi19.cfg
