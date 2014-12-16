@@ -15,7 +15,6 @@ develop-eggs/
 eggs/
 env/
 etc/.svn/
-fabfile.pyc
 parts/
 plone-buildout/products/
 src/
