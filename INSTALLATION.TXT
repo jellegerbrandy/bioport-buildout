@@ -1,5 +1,35 @@
 choose a *.cfg file or create your own.
 
 
-> python bootstrap.py -v 1.7.0 -c hi19.cfg
-> bin/buildout -vv -c hi19.cfg
+INSTALL SOFTWARE
+----------------
+
+> python bootstrap.py -v 1.7.0 -c develop.cfg
+> bin/buildout -vv -c develop.cfg
+
+
+INSTALL DATABASE
+----------------
+
+??
+
+CONFIGURE THE APPLICATION
+--------------------------
+Visit http://127.0.0.1:8094/bioport/admin/edit
+and change the settings, if necessary
+
+
+STARTING AND STOPPING
+-----------------------
+
+Start instance for debugging purposes with
+
+> bin/bioport-ctl fg
+
+Start all services for production with
+
+> bin/supervisord
+
+and control with
+
+> bin/supervisorctl
