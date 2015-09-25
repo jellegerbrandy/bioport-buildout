@@ -19,7 +19,31 @@
 # License along with this program.  If not, see
 # <http://www.gnu.org/licenses/gpl-3.0.html>.
 ##########################################################################
+"""
+This script defines some utility functions for deployment, managing the server, etc.
 
+It needs "fabric" to run. ("sudo apt-get install fabric" on debian).
+
+The following command gives is a list of available commands.
+
+>> fab -l
+
+The script also expects to find a file secret.py in the current directory that contains information
+about various installations of the software. These should have the following form:
+
+CONFIG = {
+    'production':         # the name of the deployment configuration
+        'host': 'usename@hostname',   # hostname of the machine where the instance is deployed, e.g. localhost or www.bioport.example.com
+        'dsn': 'mysql://username:password@hostname/databasename', # access to the mysql instance
+        'db_host': 'hostname',  # where the mysql db is found
+        'db_name': 'databasename',
+        'db_user': 'username',
+        'db_password': 'password',
+    },
+
+}
+
+"""
 
 import os
 import copy
@@ -27,14 +51,8 @@ import copy
 from fabric.contrib import console
 from fabric.contrib import project
 from fabric.contrib import files
-
 from fabric.api import local, env, cd, run, put, sudo, warn, puts, get, settings, task
 
-"""
-This script presupposes that .ssh config contains entries corresponding to the hosts named in HOSTS below
-with all keys in place, etc.
-
-"""
 
 env.use_ssh_config = True
 
