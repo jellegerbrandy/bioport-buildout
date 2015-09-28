@@ -26,4 +26,4 @@ include/
 lib/
 local/
 tmp/
-secret.py
+mysecret.py
