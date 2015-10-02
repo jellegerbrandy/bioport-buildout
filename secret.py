@@ -20,8 +20,6 @@
 # <http://www.gnu.org/licenses/gpl-3.0.html>.
 ##########################################################################
 
-
-
 CONFIG = {
     'production': {         # the name of the deployment configuration
         'host': 'usename@hostname',   # hostname of the machine where the instance is deployed, e.g. localhost or www.bioport.example.com
@@ -33,3 +31,9 @@ CONFIG = {
     },
 
 }
+
+
+try:
+    from mysecret import CONFIG
+except:
+    pass
